@@ -15,10 +15,10 @@ var ShardSize int64 = 200000
 var MapTask string = "map"
 
 // AccountName is the storage account in Azure.
-var AccountName = "workshop7go"
+var AccountName = "YOURACCOUNT"
 
 // AccountKey is the account key
-var AccountKey = "JQanrxg5u6ikek1LLvKFemkYO5UD/Grhlz8mDWdrcI9L2h9Y2KaYzyEEtj0a4Kpk3lLsjzHrKcV8+AStn3FyIA=="
+var AccountKey = "YOURKEY"
 
 // ContainerURL is the input file container with files that are to be sharded.
 var ContainerURL = fmt.Sprintf("https://%s.blob.core.windows.net/dataset", AccountName)
