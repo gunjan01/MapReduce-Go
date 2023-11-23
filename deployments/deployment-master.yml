@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: master-deployment
+  labels:
+    app: master
+spec:
+  selector:
+    matchLabels:
+      app: master
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: master
+    spec:
+      containers:
+        - name: master
+          image: gunjantank11/workshop8:master-tag
+          env:
+            - name: MASTER_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          ports:
+            - name: master-service
+              containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: master-service
+spec:
+  selector:
+    app: master
+  ports:
+    - name: http
+      port: 80
+      nodePort: 30080
+  type: LoadBalancer

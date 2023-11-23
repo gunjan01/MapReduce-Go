@@ -1,0 +1,18 @@
+FROM golang:alpine as builder
+
+RUN apk add --no-cache git
+RUN apk --no-cache add ca-certificates
+
+WORKDIR $GOPATH/src/github.com/rpc/
+COPY . .
+
+# Fetch dependencies
+RUN go mod tidy
+
+# Build the binary. for grpc gateway
+RUN go build -o http ./cmd/http
+
+EXPOSE 8080
+RUN chmod +x ./http
+
+ENTRYPOINT ["./http"]

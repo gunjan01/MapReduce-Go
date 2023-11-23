@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-deployment
+  labels:
+    app: http
+spec:
+  selector:
+    matchLabels:
+      app: http
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: http
+    spec:
+      containers:
+        - name: master
+          image: gunjantank11/workshop9:http-tag
+          ports:
+            - name: http-service
+              containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: master-service
+spec:
+  selector:
+    app: master
+  ports:
+    - name: http
+      port: 8080
+      nodePort: 30080
+  type: LoadBalancer

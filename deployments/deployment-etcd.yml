@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: etcd-deployment
+  labels:
+    app: etcd
+spec:
+  selector:
+    matchLabels:
+      app: etcd
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: etcd
+    spec:
+      containers:
+        - name: etcd
+          image: gunjantank11/workshop6:etcd-tag
+          env:
+            - name: ALLOW_NONE_AUTHENTICATION
+              value: "yes"
+          ports:
+            - name: etcd-service
+              containerPort: 2379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: etcd-service
+spec:
+  selector:
+    app: etcd
+  ports:
+    - port: 2379
+      targetPort: etcd-service
